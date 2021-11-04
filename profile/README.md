@@ -4,7 +4,7 @@ Welcome to the public organisation to store software developed by members of the
 UK Biobank [Research Access Platform (RAP)](https://dnanexus.gitbook.io/uk-biobank-rap/). The information here describes
 individual software and workflows stored as repositories within this organisation.
 
-This organisation and many of the repositories here-in are maintained by Eugene Gardner:
+This organisation and many of the repositories here-in are maintained by [Eugene Gardner](https://github.com/eugenegardner):
 
 eugene.gardner at mrc-epid.cam.ac.uk
 
@@ -12,7 +12,7 @@ Other maintainers include:
 
 T.B.D.
 
-## Table of Contents:
+### Table of Contents
 
 
 
@@ -86,17 +86,116 @@ You can then run the following to run this applet:
 dx run mrcepid-filterbcf <options>
 ```
 
+## Docker Images
+
+To provide required software to applets, we use [Docker images](https://www.docker.com/). All Docker images produced for
+this and other MRC projects are available as part of Eugene Gardner's Dockerhub profile: 
+**[egardner413](https://hub.docker.com/u/egardner413)**. See [below](#building-a-docker-image) for specifics regarding 
+building Docker images for specific applets.
+
+Individual Dockerfiles used to build images are stored in the [dockerimages repository](https://github.com/mrcepid-rap/dockerimages) 
+which is part of this organisation. Individual Dockerfiles are:
+
+| name   | Dockerfile | Associated Dockerhub Image | Brief Description |
+| ------ | ---------- | -------------------------- | ----------------- |
+| AssociationTesting | associationtesting.Dockerfile | https://hub.docker.com/r/egardner413/mrcepid-associationtesting | Contains software for performing rare variation burden testing |
+| CADD | cadd.Dockerfile | https://hub.docker.com/r/egardner413/mrcepid-annotatecadd | Contains v1.6 distribution of CADD |
+| FilterBCF | filterbcf.Dockerfile | https://hub.docker.com/r/egardner413/mrcepid-filtering | Contains software for filtering (e.g. bcftools) and VEP |
+
+### Building A Docker Image
+
+Docker images are built on an AWS Instance launched via DNANexus. I include here a brief example workflow using the "FilterBCF" Dockerfile
+to enable reproducibility. Please note that uploading to dockerhub using Eugene Gardner's dockerhub account *will not work* 
+as described in step 5 below. If you want to store this docker image for yourself, you will need to change the commands accordingly.
+All commands are run either locally using the [dx-toolkit](https://documentation.dnanexus.com/downloads) or on a DNANexus AWS instance.
+
+1. Launch a cloud-workstation:
+
+```commandline
+dx run app-cloud_workstation --ssh --instance-type mem1_ssd1_v2_x4 -imax_session_length=2h
+```
+
+This command will generate a series of prompts and eventually lead to a query for your DNANexus ssh password. This will then
+log you into an AWS instance.
+
+**Note:** One can adjust the amount of time the instance will exist for by changed the `max_session_length`
+parameter. 2 hours should be enough to build most Docker instances.
+
+2. Set your permissions to `root` on the instance:
+
+```commandline
+dx-su-contrib
+```
+
+3. Make and enter a fresh directory for building a Docker image and create a Dockerfile:
+
+```commandline
+mkdir dockerbuild
+cd dockerbuild
+```
+
+After entering this directory, you can either copy-and-paste the text from the provided Dockerfile (using something like
+`vi`), or upload the file using a combination of `dx upload`/`dx download`. Regardless of method, the following commands
+require that this file is named `Dockerfile`.
+
+4. Build the Docker image:
+
+```commandline
+docker build -t egardner413/mrcepid-filtering:latest .
+```
+
+5. Log in to dockerhub and upload the docker image:
+
+```commandline
+docker login
+# Enter prompted credentials
+docker push egardner413/mrcepid-filtering:latest
+```
+
+After this last command, the Docker image will be available to pull with the Dockerhub address of `egardner413/mrcepid-filtering:latest`.
+
 # Workflows
 
-## VCF Filtering and Rare Variant Association Testing
+## VCF Filtering
 
-This workflow is a collection of applets that perform variant filtering of raw UK Biobank provided VCFs for the purposes
-of rare variant burden testing.
+The purpose of this section is to provide information on the workflow approach to processing, filtering, and annotating 
+UK Biobank Whole Exome Sequencing (WES) data1 at the MRC Epidemiology unit using the UK Biobank (UKB) Research Access 
+Platform (RAP). This workflow generate a single quality controlled data set with annotations in order to perform rare
+variant burden testing analyses This README contains the following sections, which cover each step in our approach:
+
+1. Quality Control
+2. Variant Annotation
+3. Final Output
+4. Downstream Analysis
 
 ![](https://github.com/mrcepid-rap/.github/blob/main/images/RAPPipeline.png)
-*Graphical Outline of Workflow*
+***Graphical Outline of Workflow***
 
+This workflow is made up of five individual applets. Please see the individual READMEs within these repositories for
+more detailed information on what each step in the workflow does as well as accompanying source code: 
 
+| name | repo URL | brief description |
+| ---- | -------- | ----------------- |
+| mrcepid-filterbcf | https://github.com/mrcepid-rap/mrcepid-filterbcf.git | filters vcf/bcf according to predetermined method |
+| mrcepid-annotatecadd | t.b.d. | annotates filtered vcf/bcf with [CADD](https://cadd.gs.washington.edu/) |
+| mrcepid-collapsevariants | t.b.d. | Quantifies variants from a filtered vcf according to a filtering expression |
+| mrcepid-mergecollapsevariants | t.b.d. | Merges collapsed variants across all vcfs | 
+| mrcepid-buildgrms | t.b.d. | Calculate genetic relatedness matrices (GRMs) and sample exclusion lists from genetic data |
+
+### 1. Quality Control
+
+The current proposal for variant quality control is to use a missingness-based approach for variant-level filters. 
+We use this approach as UK Biobank does not provide more fine-tuned parameters that we can use for variant-level
+filtering. In brief, UK Biobank used the “OQFE” [calling approach](https://www.nature.com/articles/s41588-021-00885-0) for
+the 200k exomes, which involves alignment with [BWA mem](http://bio-bwa.sourceforge.net/bwa.shtml) and variant calling 
+with [DeepVariant](https://github.com/google/deepvariant). Variants were restricted to ±100bps from exome capture regions
+and then filtered using the following parameters:
+
+1. Hardy-Weinberg Equil. p.value < 1x10-15
+2. Minimum read coverage depth > 7 for SNVs and > 10 for InDels
+3. One sample per variant passed allele balance > 0.15 and > 0.20 for InDels
+
+[Eugene Gardner](https://github.com/eugenegardner) has designed the 
 
 # Software
 
@@ -106,4 +205,4 @@ individual READMEs within these repositories for more information on what applet
 | name | repo URL | native project | brief description |
 | ---- | -------- | -------------- | ----------------- |
 | mrcepid-collecthsmetrics | https://github.com/mrcepid-rap/mrcepid-collecthsmetrics | MRC - Y Chromosome Loss | Calculate coverage using picardtools CollectHsMetrics |
-| mrcepid-filterbcf | https://github.com/mrcepid-rap/mrcepid-filterbcf | MRC - Variant Filter | Filter a bcf/vcf |
+| mrcepid-runassociationtesting | t.b.d. | MRC - Variant Filtering | Run various rare variant burden test software |
