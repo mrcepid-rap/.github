@@ -61,14 +61,21 @@ for an "applet". Please see the DNANexus documentation on applets to learn about
 
 https://documentation.dnanexus.com/developer/apps.
 
+Each applet in this organisation comes with three (among other) files:
+
+1. Source code – Source code is located in `src/` as a single script with a `.py` suffix. Source code _should_ be heavily
+   commented to enable use by others.
+2. Applet metadata – A `dxapp.json` in the root directory. This file holds applet metadata to tell DNANexus how to build the 
+   app. How this file is constructed is documented [here](https://documentation.dnanexus.com/developer/apps/app-metadata)
+3. Documentation – A [github-format Markdown](https://guides.github.com/features/mastering-markdown/). This is where you 
+   will find the most relevant information on what the applet does and how to use it. 
+
 Brief instructions here on how to pull an applet from this organisation with github, and building it on the RAP
 within an individual project are below.
 
 ## Cloning an Applet
 
-Applets have been
-
-If you are using a project other than that used to generate the applet, you will need to compile this applet for your
+If you are using a project other than that used to generate a given applet, you will need to compile this applet for your
 respective DNANexus project (using the repostory for [mrcepid-filterbcf](https://github.com/mrcepid-rap/mrcepid-filterbcf.git) as an example):
 
 1. Clone this github repo to some directory:
@@ -183,7 +190,7 @@ more detailed information on what each step in the workflow does as well as acco
 | name | repo URL | brief description |
 | ---- | -------- | ----------------- |
 | mrcepid-filterbcf | https://github.com/mrcepid-rap/mrcepid-filterbcf.git | filters vcf/bcf according to predetermined method |
-| mrcepid-annotatecadd | t.b.d. | annotates filtered vcf/bcf with [CADD](https://cadd.gs.washington.edu/) |
+| mrcepid-annotatecadd | https://github.com/mrcepid-rap/mrcepid-annotatecadd.git | annotates filtered vcf/bcf with [CADD](https://cadd.gs.washington.edu/) |
 | mrcepid-collapsevariants | t.b.d. | Quantifies variants from a filtered vcf according to a filtering expression |
 | mrcepid-mergecollapsevariants | t.b.d. | Merges collapsed variants across all vcfs | 
 | mrcepid-buildgrms | t.b.d. | Calculate genetic relatedness matrices (GRMs) and sample exclusion lists from genetic data |
