@@ -93,8 +93,8 @@ dx run mrcepid-filterbcf <options>
 This workflow is a collection of applets that perform variant filtering of raw UK Biobank provided VCFs for the purposes
 of rare variant burden testing.
 
-![Graphical Outline of Workflow](https://github.com/mrcepid-rap/.github/blob/main/images/RAPPipeline.png)
-
+![](https://github.com/mrcepid-rap/.github/blob/main/images/RAPPipeline.png)
+*Graphical Outline of Workflow*
 
 
 
