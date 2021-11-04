@@ -14,7 +14,14 @@ T.B.D.
 
 ### Table of Contents
 
-
+- [Relevant DNA Nexus Projects](#relevant-dna-nexus-projects)
+- [Using Applets on DNANexus](#using-applets-on-dnanexus)
+    * [Cloning an Applet](#cloning-an-applet)
+    * [Docker Images](#docker-images)
+        + [Building A Docker Image](#building-a-docker-image)
+- [Workflows](#workflows)
+    * [VCF Filtering and Rare Variant Burden Testing](#vcf-filtering-and-rare-variant-burden-testing)
+- [Software](#software)
 
 # Relevant DNA Nexus Projects
 
@@ -90,10 +97,10 @@ dx run mrcepid-filterbcf <options>
 
 To provide required software to applets, we use [Docker images](https://www.docker.com/). All Docker images produced for
 this and other MRC projects are available as part of Eugene Gardner's Dockerhub profile: 
-**[egardner413](https://hub.docker.com/u/egardner413)**. See [below](#building-a-docker-image) for specifics regarding 
-building Docker images for specific applets.
+[egardner413](https://hub.docker.com/u/egardner413). 
 
-Individual Dockerfiles used to build images are stored in the [dockerimages repository](https://github.com/mrcepid-rap/dockerimages) 
+See [below](#building-a-docker-image) for specifics regarding building Docker images for specific applets. Individual 
+Dockerfiles used to build images are stored in the [dockerimages repository](https://github.com/mrcepid-rap/dockerimages) 
 which is part of this organisation. Individual Dockerfiles are:
 
 | name   | Dockerfile | Associated Dockerhub Image | Brief Description |
@@ -101,6 +108,10 @@ which is part of this organisation. Individual Dockerfiles are:
 | AssociationTesting | associationtesting.Dockerfile | https://hub.docker.com/r/egardner413/mrcepid-associationtesting | Contains software for performing rare variation burden testing |
 | CADD | cadd.Dockerfile | https://hub.docker.com/r/egardner413/mrcepid-annotatecadd | Contains v1.6 distribution of CADD |
 | FilterBCF | filterbcf.Dockerfile | https://hub.docker.com/r/egardner413/mrcepid-filtering | Contains software for filtering (e.g. bcftools) and VEP |
+
+**Note:** For most of the above I have chosen **not** to hardcode programme version numbers. This means that Docker will install the latest
+version of any software provided as part of the Dockerfile! The exception to this is plink/plink2 as the developers do not provide static links to
+the latest version.
 
 ### Building A Docker Image
 
@@ -156,22 +167,17 @@ After this last command, the Docker image will be available to pull with the Doc
 
 # Workflows
 
-## VCF Filtering
+## VCF Filtering and Rare Variant Burden Testing
 
-The purpose of this section is to provide information on the workflow approach to processing, filtering, and annotating 
-UK Biobank Whole Exome Sequencing (WES) data1 at the MRC Epidemiology unit using the UK Biobank (UKB) Research Access 
-Platform (RAP). This workflow generate a single quality controlled data set with annotations in order to perform rare
-variant burden testing analyses This README contains the following sections, which cover each step in our approach:
-
-1. Quality Control
-2. Variant Annotation
-3. Final Output
-4. Downstream Analysis
+The purpose of this section is to provide information on our approach to processing, filtering, annotating, and burden testing 
+UK Biobank Whole Exome Sequencing (WES) data at the IMS / MRC Epidemiology Unit using the UK Biobank (UKB) Research Access 
+Platform (RAP). This workflow generates a single quality-controlled data set with annotations in order to perform rare
+variant burden testing analyses.
 
 ![](https://github.com/mrcepid-rap/.github/blob/main/images/RAPPipeline.png)
 ***Graphical Outline of Workflow***
 
-This workflow is made up of five individual applets. Please see the individual READMEs within these repositories for
+This workflow is made up of six individual applets. Please see the individual READMEs within these repositories for
 more detailed information on what each step in the workflow does as well as accompanying source code: 
 
 | name | repo URL | brief description |
@@ -181,21 +187,13 @@ more detailed information on what each step in the workflow does as well as acco
 | mrcepid-collapsevariants | t.b.d. | Quantifies variants from a filtered vcf according to a filtering expression |
 | mrcepid-mergecollapsevariants | t.b.d. | Merges collapsed variants across all vcfs | 
 | mrcepid-buildgrms | t.b.d. | Calculate genetic relatedness matrices (GRMs) and sample exclusion lists from genetic data |
+| mrcepid-runassociationtesting | t.b.d | Run one of four different burden tests |
 
-### 1. Quality Control
+There are three primary outputs from this workflow:
 
-The current proposal for variant quality control is to use a missingness-based approach for variant-level filters. 
-We use this approach as UK Biobank does not provide more fine-tuned parameters that we can use for variant-level
-filtering. In brief, UK Biobank used the “OQFE” [calling approach](https://www.nature.com/articles/s41588-021-00885-0) for
-the 200k exomes, which involves alignment with [BWA mem](http://bio-bwa.sourceforge.net/bwa.shtml) and variant calling 
-with [DeepVariant](https://github.com/google/deepvariant). Variants were restricted to ±100bps from exome capture regions
-and then filtered using the following parameters:
-
-1. Hardy-Weinberg Equil. p.value < 1x10-15
-2. Minimum read coverage depth > 7 for SNVs and > 10 for InDels
-3. One sample per variant passed allele balance > 0.15 and > 0.20 for InDels
-
-[Eugene Gardner](https://github.com/eugenegardner) has designed the 
+1. Filtered and annotated bcf files – generated following running "mrcepid-annotatecadd"
+2. Collapsed Variants for Burden Testing – generated following "mrcepid-mergecollapsevariants"
+3. Association Statistics - generated by "mrcepid-runassociationtesting"
 
 # Software
 
@@ -205,4 +203,3 @@ individual READMEs within these repositories for more information on what applet
 | name | repo URL | native project | brief description |
 | ---- | -------- | -------------- | ----------------- |
 | mrcepid-collecthsmetrics | https://github.com/mrcepid-rap/mrcepid-collecthsmetrics | MRC - Y Chromosome Loss | Calculate coverage using picardtools CollectHsMetrics |
-| mrcepid-runassociationtesting | t.b.d. | MRC - Variant Filtering | Run various rare variant burden test software |
