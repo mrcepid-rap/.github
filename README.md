@@ -1,13 +1,7 @@
-# Introduction
+# Secret
 
-Welcome to the public organisation to store software developed by members of the Institute for Metabolic Science for the 
-UK Biobank Research Access Platform. The information here describes individual software and pipelines stored as 
-repositories.  
+This repository is to create a README for the organisation: 
 
-This organisation and many of the repositories here-in are maintained by Eugene Gardner:
+https://github.com/mrcepid-rap
 
-eugene.gardner at mrc-epid.cam.ac.uk
-
-# Workflows
-
-
+To modify the organisation readme, change `profile/README.md` **NOT** this document! 
