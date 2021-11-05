@@ -193,7 +193,7 @@ more detailed information on what each step in the workflow does as well as acco
 | mrcepid-annotatecadd | https://github.com/mrcepid-rap/mrcepid-annotatecadd.git | annotates filtered vcf/bcf with [CADD](https://cadd.gs.washington.edu/) |
 | mrcepid-collapsevariants | https://github.com/mrcepid-rap/mrcepid-collapsevariants.git | Quantifies variants from a filtered vcf according to a filtering expression |
 | mrcepid-mergecollapsevariants | https://github.com/mrcepid-rap/mrcepid-mergecollapsevariants.git | Merges collapsed variants across all vcfs | 
-| mrcepid-buildgrms | t.b.d. | Calculate genetic relatedness matrices (GRMs) and sample exclusion lists from genetic data |
+| mrcepid-buildgrms | https://github.com/mrcepid-rap/mrcepid-buildgrms.git | Calculate genetic relatedness matrices (GRMs) and sample exclusion lists from genetic data |
 | mrcepid-runassociationtesting | t.b.d | Run one of four different burden tests |
 
 There are three primary outputs from this workflow:
