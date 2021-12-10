@@ -43,9 +43,9 @@ This organisation has three seperate projects:
 
 | project name | brief description | project hash |
 | ------------ | ----------------- | ------------ |
-| MRC - Y Chromosome Loss | Effects of rare variation on somatic loss of the Y-chromosome | project-G50vFK0JJjbf1VJb4gk2vVXX |
-| MRC - Variant Filtering | Variant filtering and rare variation burden testing software | project-G2XK5zjJXk83yZ598Z7BpGPk |
-| MRC - Miscarriage | Effects of rare homozygous LoF variation on miscarraige | t.b.d |
+| MRC_EPID_450K_read_depth | Effects of rare variation on somatic loss of the Y-chromosome | project-G6F3238JvzZpKfB7FbbYpX92 |
+| MRC - Variant Filtering 450k | Variant filtering and rare variation burden testing software | project-G6BJF50JJv8p4PjGB9yy7YQ2 |
+| genetics_of_miscarriage_relaunch | Effects of rare homozygous LoF variation on miscarraige | project-G6Z05V8JZGX3JBB9JpBqX6V7 |
 
 # Using Applets on DNANexus
 
