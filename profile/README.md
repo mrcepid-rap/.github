@@ -197,8 +197,8 @@ more detailed information on what each step in the workflow does as well as acco
 | mrcepid-bcfsplitter | https://github.com/mrcepid-rap/mrcepid-bcfsplitter | splits bcf files into predetermined chunk sizes |
 | mrcepid-filterbcf | https://github.com/mrcepid-rap/mrcepid-filterbcf | filters vcf/bcf according to predetermined method |
 | mrcepid-annotatecadd | https://github.com/mrcepid-rap/mrcepid-annotatecadd | annotates filtered vcf/bcf with [CADD](https://cadd.gs.washington.edu/) |
+| mrcepid-makebgen | https://github.com/mrcepid-rap/mrcepid-makebgen | convert annotated bcf files into per-chromosome bgen files |
 | mrcepid-collapsevariants | https://github.com/mrcepid-rap/mrcepid-collapsevariants | Quantifies variants from a filtered vcf according to a filtering expression |
-| mrcepid-mergecollapsevariants | https://github.com/mrcepid-rap/mrcepid-mergecollapsevariants | Merges collapsed variants across all vcfs | 
 | mrcepid-buildgrms | https://github.com/mrcepid-rap/mrcepid-buildgrms | Calculate genetic relatedness matrices (GRMs) and sample exclusion lists from genetic data |
 | mrcepid-runassociationtesting | https://github.com/mrcepid-rap/mrcepid-runassociationtesting | Run one of four different burden tests |
 
