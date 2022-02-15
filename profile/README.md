@@ -21,9 +21,11 @@ T.B.D.
         + [Building A Docker Image](#building-a-docker-image)
 - [Workflows](#workflows)
     * [VCF Filtering and Rare Variant Burden Testing](#vcf-filtering-and-rare-variant-burden-testing)
+        + [Command-Line Examples](#command-line-examples)
         + [Provided Resources](#provided-resources)
             - [Combined VEP Annotations](#combined-vep-annotations)
             - [Sample Lists](#sample-lists)
+            - [Collapsed Variants](#collapsed-variants)
 - [Tutorials](#tutorials)
 - [Software](#software)
 
