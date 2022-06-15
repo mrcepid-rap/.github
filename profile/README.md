@@ -48,11 +48,11 @@ what this means.
 
 This organisation has three seperate projects:
 
-| project name | brief description | project hash |
-| ------------ | ----------------- | ------------ |
-| MRC_EPID_450K_read_depth | Effects of rare variation on somatic loss of the Y-chromosome | project-G6F3238JvzZpKfB7FbbYpX92 |
-| MRC - Variant Filtering 450k | Variant filtering and rare variation burden testing software | project-G6BJF50JJv8p4PjGB9yy7YQ2 |
-| genetics_of_miscarriage_relaunch | Effects of rare homozygous LoF variation on miscarraige | project-G6Z05V8JZGX3JBB9JpBqX6V7 |
+| project name                     | brief description                                             | project hash                     |
+|----------------------------------|---------------------------------------------------------------|----------------------------------|
+| MRC_EPID_450K_read_depth         | Effects of rare variation on somatic loss of the Y-chromosome | project-G6F3238JvzZpKfB7FbbYpX92 |
+| MRC - Variant Filtering 450k     | Variant filtering and rare variation burden testing software  | project-G6BJF50JJv8p4PjGB9yy7YQ2 |
+| genetics_of_miscarriage_relaunch | Effects of rare homozygous LoF variation on miscarraige       | project-G6Z05V8JZGX3JBB9JpBqX6V7 |
 
 # Using Applets on DNANexus
 
@@ -64,7 +64,7 @@ brief:
 * Apps are visible to all projects on the DNANexus platform (with some settable restrictions by the developer).
 
 Here, we have provided the sourcecode for applets, and thus each repository within this organisation is the source code
-for an "applet". Please see the DNANexus documentation on applets to learn about how they are created, maintained, and run:
+for one "applet". Please see the DNANexus documentation on applets to learn about how they are created, maintained, and run:
 
 https://documentation.dnanexus.com/developer/apps.
 
@@ -79,6 +79,13 @@ Each applet in this organisation comes with three (among other) files:
 
 Brief instructions here on how to pull an applet from this organisation with github, and building it on the RAP
 within an individual project are below.
+
+For a select few applets, we have also provided them in 'app' form. This means that you do not need to pull the applet
+source code from GitHub and build it within your own project. This will ensure you are always using the latest version 
+of a given applet and keeps you from having to manually update your local version. To be able to access an app, you
+will need to be an authorised member of `org-mrc_epid_group_1_2`. Please contact Eugene Gardner if you would like to
+be added! For a list of applets available as apps, please refer to the 
+[VCF Filtering and Rare Variant Burden Testing](#vcf-filtering-and-rare-variant-burden-testing) section.
 
 ## Cloning an Applet
 
@@ -120,11 +127,11 @@ See [below](#building-a-docker-image) for specifics regarding building Docker im
 Dockerfiles used to build images are stored in the [dockerimages repository](https://github.com/mrcepid-rap/dockerimages) 
 which is part of this organisation. Individual Dockerfiles are:
 
-| name   | Dockerfile | Associated Dockerhub Image | Brief Description |
-| ------ | ---------- | -------------------------- | ----------------- |
+| name               | Dockerfile                    | Associated Dockerhub Image                                      | Brief Description                                              |
+|--------------------|-------------------------------|-----------------------------------------------------------------|----------------------------------------------------------------|
 | AssociationTesting | associationtesting.Dockerfile | https://hub.docker.com/r/egardner413/mrcepid-associationtesting | Contains software for performing rare variation burden testing |
-| CADD | cadd.Dockerfile | https://hub.docker.com/r/egardner413/mrcepid-annotatecadd | Contains v1.6 distribution of CADD |
-| FilterBCF | filterbcf.Dockerfile | https://hub.docker.com/r/egardner413/mrcepid-filtering | Contains software for filtering (e.g. bcftools) and VEP |
+| CADD               | cadd.Dockerfile               | https://hub.docker.com/r/egardner413/mrcepid-annotatecadd       | Contains v1.6 distribution of CADD                             |
+| FilterBCF          | filterbcf.Dockerfile          | https://hub.docker.com/r/egardner413/mrcepid-filtering          | Contains software for filtering (e.g. bcftools) and VEP        |
 
 **Note:** For most of the above I have chosen **not** to hardcode programme version numbers. This means that Docker will install the latest
 version of any software provided as part of the Dockerfile! The exception to this is plink/plink2 as the developers do not provide static links to
@@ -197,15 +204,15 @@ variant burden testing analyses.
 This workflow is made up of seven individual applets. Please see the individual READMEs within these repositories for
 more detailed information on what each step in the workflow does as well as accompanying source code: 
 
-| name                          | repo URL                                                     | brief description                                                                          |
-|-------------------------------|--------------------------------------------------------------|--------------------------------------------------------------------------------------------|
-| mrcepid-bcfsplitter           | https://github.com/mrcepid-rap/mrcepid-bcfsplitter           | splits bcf files into predetermined chunk sizes                                            |
-| mrcepid-filterbcf             | https://github.com/mrcepid-rap/mrcepid-filterbcf             | filters vcf/bcf according to predetermined method                                          |
-| mrcepid-annotatecadd          | https://github.com/mrcepid-rap/mrcepid-annotatecadd          | annotates filtered vcf/bcf with [CADD](https://cadd.gs.washington.edu/)                    |
-| mrcepid-makebgen              | https://github.com/mrcepid-rap/mrcepid-makebgen              | convert annotated bcf files into per-chromosome bgen files                                 |
-| mrcepid-collapsevariants      | https://github.com/mrcepid-rap/mrcepid-collapsevariants      | Quantifies variants from a filtered vcf according to a filtering expression                |
-| mrcepid-buildgrms             | https://github.com/mrcepid-rap/mrcepid-buildgrms             | Calculate genetic relatedness matrices (GRMs) and sample exclusion lists from genetic data |
-| mrcepid-runassociationtesting | https://github.com/mrcepid-rap/mrcepid-runassociationtesting | Run one of four different burden tests                                                     |
+| name                          | repo URL                                                     | Available as App? | brief description                                                                          |
+|-------------------------------|--------------------------------------------------------------|-------------------|--------------------------------------------------------------------------------------------|
+| mrcepid-bcfsplitter           | https://github.com/mrcepid-rap/mrcepid-bcfsplitter           | False             | splits bcf files into predetermined chunk sizes                                            |
+| mrcepid-filterbcf             | https://github.com/mrcepid-rap/mrcepid-filterbcf             | False             | filters vcf/bcf according to predetermined method                                          |
+| mrcepid-annotatecadd          | https://github.com/mrcepid-rap/mrcepid-annotatecadd          | False             | annotates filtered vcf/bcf with [CADD](https://cadd.gs.washington.edu/)                    |
+| mrcepid-makebgen              | https://github.com/mrcepid-rap/mrcepid-makebgen              | False             | convert annotated bcf files into per-chromosome bgen files                                 |
+| mrcepid-collapsevariants      | https://github.com/mrcepid-rap/mrcepid-collapsevariants      | False             | Quantifies variants from a filtered vcf according to a filtering expression                |
+| mrcepid-buildgrms             | https://github.com/mrcepid-rap/mrcepid-buildgrms             | False             | Calculate genetic relatedness matrices (GRMs) and sample exclusion lists from genetic data |
+| mrcepid-runassociationtesting | https://github.com/mrcepid-rap/mrcepid-runassociationtesting | **True**          | Run one of four different burden tests                                                     |
 
 ### Command-Line Examples
 
@@ -215,13 +222,16 @@ quality control of QCd data. This notebook is included as a separate repository 
 
 ### Provided Resources
 
-There are three primary outputs from this workflow:
+There are four primary outputs from this workflow:
 
 1. Filtered and annotated bgen files – generated following running "mrcepid-makebgen"
    * Stored in the folder `filtered_bgen/` in `project-G6BJF50JJv8p4PjGB9yy7YQ2`.
-2. Collapsed Variant Masks for Burden Testing – generated following "mrcepid-collapsevariants"
+2. Filtered genetic data – generated by "mrcepid-buildgrms"
+   * Stored in the folder `project_resources/genetics/` in `project-G6BJF50JJv8p4PjGB9yy7YQ2`.
+   * Includes plink files of QCd genetic (i.e. array-based) variants as well as sample inclusion/exclusion lists.
+3. Collapsed Variant Masks for Burden Testing – generated following "mrcepid-collapsevariants"
    * Stored in the folder `collapsed_variants_new/` in `project-G6BJF50JJv8p4PjGB9yy7YQ2`.
-3. Association Statistics - generated by "mrcepid-runassociationtesting"
+4. Association Statistics - generated by "mrcepid-runassociationtesting"
    * Stored in the folder `results/` in `project-G6BJF50JJv8p4PjGB9yy7YQ2`
 
 This workflow also generates several additional resources. These resources are
@@ -262,12 +272,13 @@ tabix index is provided as file `file-G7xyzFjJJv8kyV7q5z8VV3Vj`.
 
 #### Collapsed Variants
 
-We have used [mrcepid-collapsevariants](https://github.com/mrcepid-rap/mrcepid-collapsevariants) to generate 16 variant masks. These masks are reasonable defaults to start performing
-association testing. They were generated by running collapsevariants on all combinations of Allele Frequency Cutoffs
-and consequence annotations. They are located in the folder `collapsed_variants_new/` in project `project-G6BJF50JJv8p4PjGB9yy7YQ2`.
-Corresponding file names are included in parentheses. A list file to provide as the input via the input parameter 
-`association_tarballs` to [mrcepid-runassociationtesting](https://github.com/mrcepid-rap/mrcepid-runassociationtesting)
-is provided as file `file-G7zPvZ0JJv8v06j8Gv2ppxpJ`
+We have used [mrcepid-collapsevariants](https://github.com/mrcepid-rap/mrcepid-collapsevariants) to generate 16 variant masks. 
+These masks are reasonable defaults to start performing association testing. They were generated by running 
+collapsevariants on all combinations of Allele Frequency Cutoffs and consequence annotations. They are located in the
+folder `collapsed_variants_new/` in project `project-G6BJF50JJv8p4PjGB9yy7YQ2`. Corresponding file names are included
+in parentheses. A list file to provide as the input via the input parameter `association_tarballs` to 
+[mrcepid-runassociationtesting](https://github.com/mrcepid-rap/mrcepid-runassociationtesting) is provided as file
+`file-G7zPvZ0JJv8v06j8Gv2ppxpJ`.
 
 Allele Frequency Cutoffs:
 1. Minor Allele Frequency < 0.1% (MAF_01)
