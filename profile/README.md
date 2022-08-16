@@ -196,7 +196,7 @@ UK Biobank Whole Exome Sequencing (WES) data at the IMS / MRC Epidemiology Unit 
 Platform (RAP). This workflow generates a single quality-controlled data set with annotations in order to perform rare
 variant burden testing analyses.
 
-![](https://github.com/mrcepid-rap/.github/blob/main/images/RAPPipeline.png)
+![](https://github.com/mrcepid-rap/.github/blob/main/images/RAPPipeline.v3.png)
 ***Graphical Outline of Workflow***
 
 This workflow is made up of six individual applets. Please see the individual READMEs within these repositories for
