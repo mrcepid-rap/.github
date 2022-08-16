@@ -127,14 +127,12 @@ See [below](#building-a-docker-image) for specifics regarding building Docker im
 Dockerfiles used to build images are stored in the [dockerimages repository](https://github.com/mrcepid-rap/dockerimages) 
 which is part of this organisation. Individual Dockerfiles are:
 
-| name               | Dockerfile                    | Associated Dockerhub Image                                      | Brief Description                                              |
-|--------------------|-------------------------------|-----------------------------------------------------------------|----------------------------------------------------------------|
-| AssociationTesting | associationtesting.Dockerfile | https://hub.docker.com/r/egardner413/mrcepid-associationtesting | Contains software for performing rare variation burden testing |
-| CADD               | cadd.Dockerfile               | https://hub.docker.com/r/egardner413/mrcepid-annotatecadd       | Contains v1.6 distribution of CADD                             |
-| FilterBCF          | filterbcf.Dockerfile          | https://hub.docker.com/r/egardner413/mrcepid-filtering          | Contains software for filtering (e.g. bcftools) and VEP        |
+| name               | Dockerfile                    | Associated Dockerhub Image                                      | Brief Description                                                   |
+|--------------------|-------------------------------|-----------------------------------------------------------------|---------------------------------------------------------------------|
+| BurdenTesting      | burdentesting.Dockerfile      | https://hub.docker.com/r/egardner413/mrcepid-burdentesting      | Contains all software required for the WES burden testing pipeline  |
 
 **Note:** For most of the above I have chosen **not** to hardcode programme version numbers. This means that Docker will install the latest
-version of any software provided as part of the Dockerfile! The exception to this is plink/plink2 as the developers do not provide static links to
+version of any software provided as part of the Dockerfile! The exception to this is plink2 as the developers do not provide static links to
 the latest version.
 
 ### Building A Docker Image
@@ -201,14 +199,13 @@ variant burden testing analyses.
 ![](https://github.com/mrcepid-rap/.github/blob/main/images/RAPPipeline.png)
 ***Graphical Outline of Workflow***
 
-This workflow is made up of seven individual applets. Please see the individual READMEs within these repositories for
+This workflow is made up of six individual applets. Please see the individual READMEs within these repositories for
 more detailed information on what each step in the workflow does as well as accompanying source code: 
 
 | name                          | repo URL                                                     | Available as App? | brief description                                                                          |
 |-------------------------------|--------------------------------------------------------------|-------------------|--------------------------------------------------------------------------------------------|
 | mrcepid-bcfsplitter           | https://github.com/mrcepid-rap/mrcepid-bcfsplitter           | False             | splits bcf files into predetermined chunk sizes                                            |
 | mrcepid-filterbcf             | https://github.com/mrcepid-rap/mrcepid-filterbcf             | False             | filters vcf/bcf according to predetermined method                                          |
-| mrcepid-annotatecadd          | https://github.com/mrcepid-rap/mrcepid-annotatecadd          | False             | annotates filtered vcf/bcf with [CADD](https://cadd.gs.washington.edu/)                    |
 | mrcepid-makebgen              | https://github.com/mrcepid-rap/mrcepid-makebgen              | False             | convert annotated bcf files into per-chromosome bgen files                                 |
 | mrcepid-collapsevariants      | https://github.com/mrcepid-rap/mrcepid-collapsevariants      | False             | Quantifies variants from a filtered vcf according to a filtering expression                |
 | mrcepid-buildgrms             | https://github.com/mrcepid-rap/mrcepid-buildgrms             | False             | Calculate genetic relatedness matrices (GRMs) and sample exclusion lists from genetic data |
@@ -216,9 +213,12 @@ more detailed information on what each step in the workflow does as well as acco
 
 ### Command-Line Examples
 
-Eugene Gardner has generated a R Markdown notebook that contains command-line examples for running individual tools 
-described as part of this workflow. This notebook also contains examples for plotting of association tests and some
-quality control of QCd data. This notebook is included as a separate repository in this project:
+Beyond descriptions included in the README's for each tool, Eugene Gardner has generated a R Markdown notebook that 
+contains command-line examples for running individual tools described as part of this workflow. This notebook also
+contains examples for plotting of association tests and some quality control of QCd data. This notebook is included
+as a separate repository in this project:
+
+[QC_workflow](https://github.com/mrcepid-rap/QC_workflow)
 
 ### Provided Resources
 
